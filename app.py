@@ -10,7 +10,8 @@ st.set_page_config(page_title="Age Predictor", page_icon="📷", layout="centere
 st.title("🎯 تطبيق التنبؤ بالعمر")
 st.write("ارفع صورة (وجه شخص) والموديل هيتنبأ بالعمر المتوقع.")
 
-MODEL_PATH = "best.h5"
+MODEL_PATH = r"E:\age-prediction-app\best.h5"
+
 
 @st.cache_resource
 def load_model():
