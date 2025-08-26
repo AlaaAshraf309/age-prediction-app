@@ -18,7 +18,7 @@ def load_model():
     if not os.path.exists(MODEL_PATH):
         st.error("⚠️ ملف الموديل best.h5 مش موجود في نفس الفولدر!")
         st.stop()
-    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False, safe_mode=False)
     return model
 
 def preprocess(img, target_size=(224,224)):
