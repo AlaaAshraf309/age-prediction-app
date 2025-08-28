@@ -17,8 +17,16 @@ def load_model():
     if not os.path.exists(MODEL_PATH):
         st.error("⚠️ ملف الموديل best.h5 مش موجود!")
         st.stop()
+    
+    # تحميل الموديل الأصلي
     model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-    return model
+    
+    # إنشاء نسخة Prediction-safe باستخدام Functional API
+    input_tensor = model.input
+    output_tensor = model.output
+    prediction_model = tf.keras.Model(inputs=input_tensor, outputs=output_tensor)
+    
+    return prediction_model
 
 def preprocess(img, target_size=(224,224)):
     img = img.convert("RGB")
@@ -27,6 +35,7 @@ def preprocess(img, target_size=(224,224)):
     img_arr = np.expand_dims(img_arr, axis=0)
     return img_arr
 
+# تحميل الموديل الجاهز للتنبؤ
 model = load_model()
 
 uploaded_file = st.file_uploader("📤 ارفع صورة", type=["jpg","jpeg","png"])
