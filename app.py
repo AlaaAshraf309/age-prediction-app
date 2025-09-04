@@ -49,6 +49,19 @@ def preprocess(img, target_size=(224, 224)):
     img_arr = np.expand_dims(img_arr, axis=0)
     return img_arr
 
+# 🏷️ Age group classifier with ranges
+def get_age_range(age):
+    if age < 13:
+        return "Child  (0–12 years)"
+    elif age < 20:
+        return "Teenager  (13–19 years)"
+    elif age < 36:
+        return "Young Adult  (20–35 years)"
+    elif age < 56:
+        return "Adult  (36–55 years)"
+    else:
+        return "Senior  (56+ years)"
+
 # 🔄 Load model
 model = load_model()
 
@@ -71,7 +84,11 @@ if uploaded_file is not None:
             age = float(prediction[0][0])
 
         # 🎉 Show result
-        st.success(f"👤 Estimated Age: **{age:.1f} years**")
+        age_group = get_age_range(age)
+        st.success(
+            f" Estimated Age: **{age:.1f} years**\n\n"
+            f" Age Group: {age_group}"
+        )
 
     except Exception as e:
         st.error(f"❌ An error occurred during prediction: {e}")
