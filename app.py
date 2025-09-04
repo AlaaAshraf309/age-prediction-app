@@ -15,7 +15,7 @@ st.set_page_config(
 # 🏷️ Title and description
 st.markdown(
     """
-    <h1 style='text-align: center; color: #4A90E2;'>🎯 AI Age Predictor</h1>
+    <h1 style='text-align: center; color: #4A90E2;'> AI Age Predictor</h1>
     <p style='text-align: center; font-size:18px; color: #555;'>
         Upload a face image and let the model predict the estimated age.
     </p>
