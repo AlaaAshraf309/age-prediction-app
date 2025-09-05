@@ -23,13 +23,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-MODEL_PATH = r"E:\\age-prediction-app\\best.h5"
+MODEL_PATH = r"E:\\age-prediction-app\\best55.h5"
 
 # 🧠 Load model safely
 @st.cache_resource
 def load_model():
     if not os.path.exists(MODEL_PATH):
-        st.error("⚠️ Model file 'best.h5' not found!")
+        st.error("⚠️ Model file 'best55.h5' not found!")
         st.stop()
     
     model = tf.keras.models.load_model(MODEL_PATH, compile=False)
