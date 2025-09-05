@@ -23,38 +23,23 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-MODEL_PATH = r"E:\\age-prediction-app\\best55.h5"
+MODEL_PATH = r"E:\\age-prediction-app\\best.h5"
 
 # 🧠 Load model safely
 @st.cache_resource
 def load_model():
     if not os.path.exists(MODEL_PATH):
-        st.error("⚠️ Model file 'best55.h5' not found!")
+        st.error("⚠️ Model file 'best.h5' not found!")
         st.stop()
     
-    old_model = tf.keras.models.load_model(MODEL_PATH, compile=False)
-
-    # لو الموديل بيطلب اتنين inputs، اعمل Wrapper
-    if isinstance(old_model.input, list) and len(old_model.input) == 2:
-        st.warning("⚠️ Model expects 2 inputs, wrapping it to use only 1 image input.")
-
-        # input صورة عادية
-        H, W = old_model.input_shape[0][1:3]  # ناخد من الموديل نفسه
-        img_inp = tf.keras.Input(shape=(H, W, 3))
-
-        # dummy tensor بنفس شكل الـ input التاني
-        dummy_inp = tf.zeros_like(old_model.input[1])
-
-        # مرر الاتنين
-        out = old_model([img_inp, dummy_inp])
-
-        # لفة في موديل جديد بياخد صورة واحدة
-        model = tf.keras.Model(inputs=img_inp, outputs=out)
-        return model
-    else:
-        # موديل عادي (input واحد)
-        return old_model
-
+    model = tf.keras.models.load_model(MODEL_PATH, compile=False)
+    
+    # Ensure safe prediction model (Functional API)
+    input_tensor = model.input
+    output_tensor = model.output
+    prediction_model = tf.keras.Model(inputs=input_tensor, outputs=output_tensor)
+    
+    return prediction_model
 
 # 🖼️ Preprocess image
 def preprocess(img, target_size=(224, 224)):
